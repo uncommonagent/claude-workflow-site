@@ -386,3 +386,61 @@ dl.tools-list dd {
     padding-right: 0.75rem;
   }
 }
+
+
+/* Bonus tips section */
+#bonus h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.15rem;
+  color: var(--accent);
+}
+
+.tip-card {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 0.75rem 0;
+}
+
+.tip-card:first-of-type {
+  border-top: 1px solid #e5e5e5;
+}
+
+.tip-card > summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  position: relative;
+  list-style: none;
+}
+
+.tip-card > summary::-webkit-details-marker {
+  display: none;
+}
+
+.tip-card > summary::before {
+  content: "+";
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+
+.tip-card[open] > summary::before {
+  content: "-";
+}
+
+.tip-card > p,
+.tip-card > ol,
+.tip-card > ul {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.tip-card .tip-meta {
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
