@@ -1,0 +1,86 @@
+# TOOLCHAIN_OVERVIEW.md
+
+<!--
+Stack documentation for this project.
+Claude reads this when it needs to know what tools and versions are in use.
+Update "Last updated" and "Current state" whenever the stack changes.
+
+Last updated: [YYYY-MM-DD]
+Current state: [one sentence - e.g., "Local dev only" or "Live at production.example.com"]
+-->
+
+## Frontend
+
+<!-- TODO: The UI layer. Framework, version, key libraries. -->
+- Framework: [e.g., Next.js 14 App Router, or Streamlit 1.50, or plain HTML]
+- UI library: [e.g., shadcn/ui, or "none - hand-rolled"]
+- Styling: [e.g., Tailwind CSS, or CSS Modules, or inline styles]
+- Key libraries: [e.g., Zustand for state, React Hook Form for forms]
+
+## Backend
+
+<!-- TODO: Where server-side logic lives. -->
+- Approach: [e.g., Next.js Server Actions, or Express, or serverless functions, or Python scripts]
+- Runtime: [e.g., Node.js 20, or Python 3.11]
+- Key libraries: [e.g., Zod for validation, Drizzle for ORM, pandas for data]
+
+## Database
+
+<!-- TODO: What database, what client, what schema. -->
+- Database: [e.g., PostgreSQL via Supabase, or SQLite, or MongoDB, or none]
+- Client: [e.g., supabase-js, or Prisma, or raw pg driver]
+- Schema location: [e.g., supabase/migrations/, or prisma/schema.prisma]
+- Backup policy: [e.g., "Supabase manages daily backups" or "manual, run before migrations"]
+
+## Hosting
+
+<!-- TODO: Where this runs. -->
+- Production: [e.g., Vercel, Fly.io, Streamlit Cloud, or "not deployed yet"]
+- URL: [production URL, or "N/A"]
+- Deploy method: [e.g., "git push to main triggers Vercel" or "manual: vercel --prod"]
+- Preview deploys: [e.g., "automatic on every PR" or "none"]
+
+## Auth
+
+<!-- TODO: How users authenticate, if at all. -->
+- Provider: [e.g., Clerk, Supabase Auth, NextAuth, or "none - no login required"]
+- Session strategy: [e.g., JWT, cookie-based]
+- Multi-tenant: [yes/no - if yes, describe how tenant isolation is enforced]
+
+## Billing
+
+<!-- TODO: If this project charges money. -->
+- Provider: [e.g., Stripe, or "none"]
+- Products: [e.g., one monthly plan at $49/mo, or "no billing yet"]
+
+## Third-party APIs
+
+<!-- TODO: External services this project calls. -->
+| Service | Purpose | Credential |
+|---------|---------|------------|
+| [e.g., Google Places] | [e.g., address autocomplete] | [e.g., GOOGLE_PLACES_API_KEY in .env] |
+
+## CLI tools used
+
+<!-- TODO: Command-line tools needed to work on this project. -->
+- [e.g., `vercel` - Vercel CLI for deployments and env management]
+- [e.g., `supabase` - Supabase CLI for migrations and local dev]
+- [e.g., `gh` - GitHub CLI for PR management]
+
+## Local dev setup
+
+<!-- TODO: Step-by-step for a fresh machine. Specific enough that Claude could run these. -->
+
+1. Clone: `git clone [repo-url]`
+2. Install dependencies: `[e.g., pnpm install, or pip install -r requirements.txt]`
+3. Copy env: `cp .env.example .env.local` and fill in values
+4. [Any additional steps - e.g., "Run supabase start for local DB"]
+5. Start dev server: `[e.g., pnpm dev, or streamlit run Home.py]`
+
+Dev server runs at: [e.g., http://localhost:3000]
+
+## Known local dev issues
+
+<!-- TODO: Gotchas that will waste time if someone doesn't know about them. -->
+- [e.g., "Need to run `supabase start` before the dev server or DB calls fail"]
+- [e.g., "Google Places key must have localhost in the allowed domains list"]

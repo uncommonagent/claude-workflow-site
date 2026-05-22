@@ -1,0 +1,62 @@
+# CLAUDE.md
+
+<!--
+Top-level project context. Place at the root of every project repo.
+Claude reads this first at the start of any new thread on this project.
+Fill in each section honestly. Specific beats vague every time.
+-->
+
+## What this is
+
+<!-- TODO: One paragraph. What does this project do? What problem does it solve? -->
+[Describe the project in 2-4 sentences.]
+
+## Who uses it
+
+<!-- TODO: Not just "users" - who specifically? What do they do all day? What are they trying to accomplish with this tool? -->
+[Describe the primary user and their actual workflow.]
+
+## Current state
+
+<!-- TODO: What works today? What's in progress? What's broken? -->
+Live at: [URL if deployed, or "local only - not yet deployed"]
+
+What's working:
+- [Feature or capability 1]
+- [Feature or capability 2]
+
+In progress:
+- [What's being built right now]
+
+Known issues:
+- [Anything broken or incomplete]
+
+## Key constraints
+
+<!-- TODO: Hard rules Claude should never violate. Tech decisions already locked in. Things that are off limits. -->
+- [e.g., "No business logic in UI components"]
+- [e.g., "All DB queries must include the user's team ID"]
+- [e.g., "Do not add dependencies without asking first"]
+
+## Glossary
+
+<!-- TODO: Terms that have non-obvious meanings in this project. Define anything that means something different here than it does in plain English. -->
+- [Term]: [Definition as used in this project]
+- [Term]: [Definition as used in this project]
+
+## Tech stack summary
+
+<!-- TODO: Just the headlines. Full detail lives in TOOLCHAIN_OVERVIEW.md. -->
+- Frontend: [e.g., Next.js 14, React]
+- Backend: [e.g., Next.js server actions, or FastAPI]
+- Database: [e.g., PostgreSQL via Supabase, or SQLite]
+- Hosting: [e.g., Vercel, Fly.io, Streamlit Cloud]
+- Auth: [e.g., Clerk, or none yet]
+
+## Repo structure
+
+<!-- TODO: Top-level folders with one-line descriptions. -->
+```
+[folder]/    [what it contains]
+[folder]/    [what it contains]
+```
