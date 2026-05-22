@@ -529,7 +529,20 @@ Files expected:
 
 Acceptance: smoke ran with real-system evidence.
 
-### Phase 7: Final report
+### Phase 7: Code review with Codex
+
+What to do:
+- Run `codex review --base main` (or your team's equivalent)
+- Save findings to `handoff/codex-review-&lt;feature&gt;.md`
+- Triage: P1 (fix before merge), P2 (fix if obvious), Noise (ignore)
+- Apply P1 + P2 fixes, re-run Codex once to verify, max 2 cycles total
+
+Files expected:
+- `handoff/codex-review-&lt;feature&gt;.md`
+
+Acceptance: Codex review file exists. P1 findings resolved or explicitly logged. Diff still builds and tests pass.
+
+### Phase 8: Final report
 
 What to do:
 - Write build report (both files: build-report-&lt;feature&gt;.md and build-report-CURRENT.md)
