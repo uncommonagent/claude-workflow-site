@@ -444,3 +444,57 @@ dl.tools-list dd {
   font-style: italic;
   margin-top: 0.5rem;
 }
+
+
+/* Copy-all banner for bonus tips section */
+.copy-all-banner {
+  background: #f5f1e8;
+  border: 1px solid #d8cfb8;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.copy-all-banner p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.copy-all-btn {
+  align-self: flex-start;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: static;
+  /* override absolute positioning from base .copy-btn */
+}
+
+.copy-all-btn:hover {
+  opacity: 0.9;
+}
+
+.copy-all-btn.copied {
+  background: #2d7a2d;
+}
+
+/* Hidden source content for copy buttons (still accessible to clipboard) */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: pre-wrap;
+  border: 0;
+}
