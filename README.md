@@ -8,7 +8,7 @@ Single-page site with: the pitch, a starter prompt, install warnings, five gener
 
 ## Live site
 
-<!-- URL added after first deploy -->
+https://claude-workflow-site.vercel.app
 
 ---
 
