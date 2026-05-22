@@ -30,7 +30,7 @@
 
     <p><strong>Pattern 2: Build plans as contracts.</strong> Before any code gets written, you write down exactly what the build is supposed to do, what it is not supposed to do, and how you'll know it's done. Claude treats this as a binding scope document - not a suggestion. If something comes up during the build that's not in the plan, Claude stops and asks rather than expanding scope on its own. This prevents the classic failure mode where you ask for one thing and get three things you didn't want.</p>
 
-    <p><strong>Pattern 3: Stop rules.</strong> Every build defines specific conditions under which Claude halts and waits for you. Failed tests, unexpected API behavior, a security issue outside the build scope - anything that requires a human decision. Claude does not push through stop conditions or work around them. It stops, writes a report of what it found, and waits. This is what makes it safe to walk away during a long build.</p>
+    <p><strong>Pattern 3: Stop rules and second-pair-of-eyes review.</strong> Every build defines specific conditions under which Claude halts and waits for you. Failed tests, unexpected API behavior, a security issue outside the build scope - anything that requires a human decision. Claude does not push through stop conditions or work around them. It stops, writes a report of what it found, and waits. And before any build merges, a second AI - Codex - reviews the diff for things Claude missed. Codex finds something, Claude fixes it, then it merges. Two-AI review catches what one alone misses.</p>
 
     <p>You do not need to be a developer to use this. I'm a real estate agent. The key skill is describing what you want clearly and reviewing what Claude ships. Claude handles the code. You handle the direction.</p>
 
@@ -295,7 +295,8 @@ Use this protocol for any build that will take more than 90 minutes or touch mor
 5. **Phase 4: Mutation UI.** Forms, buttons, full user surface.
 6. **Phase 5: Tests.** Unit tests for logic, integration tests for scope isolation, regression tests for any bug found during the build.
 7. **Phase 6: Smoke test.** Live test against real systems. Not mocks. Real evidence required.
-8. **Phase 7: Final report.** Build report written. PR opened if applicable.
+8. **Phase 7: Code review with Codex.** Run a second AI (Codex) against the diff. Triage findings into real bugs vs noise. Fix concrete bugs. Max 2 review cycles before moving on.
+9. **Phase 8: Final report.** Build report written. PR opened. Codex findings and fixes documented in the report.
 
 Skip phases that don&#x27;t apply. Don&#x27;t add phases not on this list without justification in the plan.
 
@@ -373,7 +374,25 @@ If live testing is genuinely impossible (missing production credentials), docume
 
 ---
 
-## Build report format (Phase 7)
+## Code review with Codex (Phase 7)
+
+After Phase 6 smoke passes and before the build report, Claude runs Codex against the diff for an independent review.
+
+The pattern:
+
+1. Claude runs `codex review --base main` (or equivalent for your setup) and saves the output to `handoff/codex-review-&lt;feature&gt;.md`.
+2. Claude triages Codex findings into three buckets:
+   - **P1 (block merge):** real bugs in the diff, security issues, data loss risk. Fix before merging.
+   - **P2 (fix if obvious):** real bugs but not catastrophic. Fix if the fix is contained to the current diff. If the fix expands scope, log as a follow-up instead.
+   - **Noise:** style preferences, opinions on architecture decisions already made, suggestions outside the build scope. Ignore.
+3. Claude applies P1 and P2 fixes that fit. Re-runs Codex once more to verify the fixes landed. Max 2 Codex cycles total. If round 3 would surface more findings, log them as follow-ups and merge anyway.
+4. Build report (Phase 8) documents what Codex found and what was fixed.
+
+Why two AIs: Claude wrote the diff and is biased toward thinking it's correct. A second model with no investment in the code finds things the first one rationalized past. Both miss things, but the overlap is smaller than either alone.
+
+---
+
+## Build report format (Phase 8)
 
 Write identical content to both:
 - `handoff/build-report-&lt;feature&gt;.md` (permanent, feature-specific)
@@ -740,6 +759,11 @@ Dev server runs at: [e.g., http://localhost:3000]
     <details class="faq-item">
       <summary>How do I know which template files to create first?</summary>
       <p>Start with <code>how-i-work-with-claude.md</code>. That file is what Claude reads at the start of every thread to understand how you want to work together. One file, fully customized to you, does more than five files filled out halfway. The prompt in Section 2 walks you through building it in a conversation with Claude.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>When does Codex come into the workflow, and why both Claude and Codex?</summary>
+      <p>Codex runs at the end of every walkaway build, after the smoke test passes and before the PR opens. Claude wrote the diff, so Claude is biased toward thinking it's correct. Codex is a different model with no investment in the code - it catches things Claude rationalized past. The pattern: Codex reviews the diff, Claude triages findings into real bugs vs noise, Claude fixes the real ones, max two review cycles, then the PR opens. Two AIs find more than one AI alone. Especially valuable for non-developers who can't easily eyeball the diff themselves.</p>
     </details>
 
     <details class="faq-item">

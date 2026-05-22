@@ -29,7 +29,8 @@ Use this protocol for any build that will take more than 90 minutes or touch mor
 5. **Phase 4: Mutation UI.** Forms, buttons, full user surface.
 6. **Phase 5: Tests.** Unit tests for logic, integration tests for scope isolation, regression tests for any bug found during the build.
 7. **Phase 6: Smoke test.** Live test against real systems. Not mocks. Real evidence required.
-8. **Phase 7: Final report.** Build report written. PR opened if applicable.
+8. **Phase 7: Code review with Codex.** Run a second AI (Codex) against the diff. Triage findings into real bugs vs noise. Fix concrete bugs. Max 2 review cycles before moving on.
+9. **Phase 8: Final report.** Build report written. PR opened. Codex findings and fixes documented in the report.
 
 Skip phases that don't apply. Don't add phases not on this list without justification in the plan.
 
@@ -107,7 +108,25 @@ If live testing is genuinely impossible (missing production credentials), docume
 
 ---
 
-## Build report format (Phase 7)
+## Code review with Codex (Phase 7)
+
+After Phase 6 smoke passes and before the build report, Claude runs Codex against the diff for an independent review.
+
+The pattern:
+
+1. Claude runs `codex review --base main` (or equivalent for your setup) and saves the output to `handoff/codex-review-<feature>.md`.
+2. Claude triages Codex findings into three buckets:
+   - **P1 (block merge):** real bugs in the diff, security issues, data loss risk. Fix before merging.
+   - **P2 (fix if obvious):** real bugs but not catastrophic. Fix if the fix is contained to the current diff. If the fix expands scope, log as a follow-up instead.
+   - **Noise:** style preferences, opinions on architecture decisions already made, suggestions outside the build scope. Ignore.
+3. Claude applies P1 and P2 fixes that fit. Re-runs Codex once more to verify the fixes landed. Max 2 Codex cycles total. If round 3 would surface more findings, log them as follow-ups and merge anyway.
+4. Build report (Phase 8) documents what Codex found and what was fixed.
+
+Why two AIs: Claude wrote the diff and is biased toward thinking it's correct. A second model with no investment in the code finds things the first one rationalized past. Both miss things, but the overlap is smaller than either alone.
+
+---
+
+## Build report format (Phase 8)
 
 Write identical content to both:
 - `handoff/build-report-<feature>.md` (permanent, feature-specific)
